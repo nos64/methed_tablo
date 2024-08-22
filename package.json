@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Онлайн расписание автобусов"
+  "description": "Онлайн расписание автобусов",
+  "dependencies": {
+    "express": "4.19.2"
+  }
 }
