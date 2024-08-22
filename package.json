@@ -2,6 +2,7 @@
   "name": "methed_tablo",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +12,7 @@
   "license": "ISC",
   "description": "Онлайн расписание автобусов",
   "dependencies": {
-    "express": "4.19.2"
+    "express": "4.19.2",
+    "luxon": "3.5.0"
   }
 }
