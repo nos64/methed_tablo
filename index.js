@@ -13,6 +13,8 @@ const __dirname = path.dirname(__filename);
 
 const TIME_ZONE = 'UTC';
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 const loadBuses = async () => {
   const data = await readFile(path.join(__dirname, 'buses.json'), 'utf-8');
   return JSON.parse(data);
@@ -56,6 +58,13 @@ const getNextDeparture = (firstDepartureTime, frequencyMinutes) => {
   return departure;
 };
 
+const sortBuses = buses => [...buses]
+  .sort(
+    (a, b) =>
+      new Date(`${a.nextDeparture.date}T${a.nextDeparture.time}Z`) -
+    new Date(`${b.nextDeparture.date}T${b.nextDeparture.time}Z`)
+  );
+
 const sendUpdatedData = async () => {
   const buses = await loadBuses()
 
@@ -66,7 +75,7 @@ const sendUpdatedData = async () => {
     return {
       ...bus,
       nextDeparture: {
-        data: nextDeparture.toFormat('yyyy-MM-dd'),
+        date: nextDeparture.toFormat('yyyy-MM-dd'),
         time: nextDeparture.toFormat('HH:mm:ss'),
     }}
   });
@@ -78,13 +87,12 @@ const sendUpdatedData = async () => {
 app.get('/next-departure', async (req, res) => {
   try {
     const updatedBuses = await sendUpdatedData();
+    const sortedBuses = sortBuses(updatedBuses);
 
-    res.json(updatedBuses);
+    res.json(sortedBuses);
   } catch {
     res.send('error!');
   }
-
-  res.send('hello world!')
 });
 
 // Start server
