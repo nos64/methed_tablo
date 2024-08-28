@@ -97,5 +97,5 @@ app.get('/next-departure', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('Server running om http://localhost:' + PORT);
+  console.log(`Server running om http://localhost: ${PORT}`);
 });
